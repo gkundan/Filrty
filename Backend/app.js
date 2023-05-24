@@ -6,7 +6,10 @@ const app = express();
 const product = require("./routes/ProductRoute");
 
 ///
+
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use("/api/v1", product);
 
 module.exports = app;
