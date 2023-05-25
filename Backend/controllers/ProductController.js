@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Product = require("../models/productModel");
 const ErrorHandler = require("../utils/ErrorHandler");
 const catchAsyncError = require("../middleware/catchAsyncError");
-
+const ApiFeatures = require("../utils/apiFeature");
 // Create product - admin
 exports.createProduct = catchAsyncError(async (req, res, next) => {
   const product = await Product.create(req.body);
@@ -14,7 +14,15 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 
 // Get all products
 exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-  const products = await Product.find();
+  //for page 1 products
+  const resultPerPage = 5;
+  //count document
+  const productCount = await Product.countDocuments();
+  const apiFeature = new ApiFeatures(Product.find(), req.query)
+    .search()
+    .filter()
+    .pagination(resultPerPage);
+  const products = await apiFeature.query;
 
   res.status(200).json({ success: true, products });
 });
@@ -32,6 +40,7 @@ exports.getProductDetail = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
+    productCount,
   });
 });
 
