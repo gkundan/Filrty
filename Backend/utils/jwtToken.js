@@ -1,3 +1,4 @@
+//just make jwt token
 const sendToken = (user, statusCode, res) => {
   const token = user.getJWTToken();
   // Calculate expiration time

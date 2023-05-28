@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 //
 const userSchema = new mongoose.Schema({
   name: {
@@ -50,7 +51,6 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
-
 
 //jwt token
 userSchema.methods.getJWTToken = function () {
