@@ -5,27 +5,38 @@ const {
   updateProduct,
   deleteProduct,
   getProductDetail,
+  createProductReview,
+  getProductReviews,
+  deleteReviews,
 } = require("../controllers/ProductController");
-//check auth
 const { isAuthenticateUser, authorizeRole } = require("../middleware/auth");
 
 const router = express.Router();
 
-//get all products
 // Root route
+router.route("/products").get(isAuthenticateUser, getAllProducts);
+
+// Create product route (admin)
 router
-  .route("/products")
-  .get(isAuthenticateUser, authorizeRole, getAllProducts);
+  .route("/admin/product/new")
+  .post(isAuthenticateUser, authorizeRole("admin"), createProduct);
 
-//create product
-router.route("/product/new").post(isAuthenticateUser, createProduct);
-
-//update,delete & detail product route
+// Update, delete, and detail product routes (admin)
 router
-  .route("/product/:id")
-  .put(isAuthenticateUser, updateProduct)
-  .delete(isAuthenticateUser, deleteProduct)
-  .get(getProductDetail);
+  .route("/admin/product/:id")
+  .put(isAuthenticateUser, authorizeRole("admin"), updateProduct)
+  .delete(isAuthenticateUser, authorizeRole("admin"), deleteProduct);
 
-//export
+// Get product detail route
+router.route("/products/:id").get(getProductDetail);
+
+//updating the rating or reviews
+router.route("/review").put(isAuthenticateUser, createProductReview);
+
+router
+  .route("/reviews")
+  .get(getProductReviews)
+  .delete(isAuthenticateUser, deleteReviews);
+
+// Export the router
 module.exports = router;

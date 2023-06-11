@@ -1,4 +1,5 @@
 const ErrorHandler = require("../utils/ErrorHandler");
+const catchAsyncError = require("./catchAsyncError");
 
 // Error handling middleware
 module.exports = (err, req, res, next) => {
@@ -33,3 +34,5 @@ module.exports = (err, req, res, next) => {
     stack: err.stack,
   });
 };
+
+
