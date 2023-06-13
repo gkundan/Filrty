@@ -6,6 +6,7 @@ const errorMiddleware = require("./middleware/Error");
 //route import
 const product = require("./routes/ProductRoute");
 const user = require("./routes/UserRoute");
+const order = require("./routes/orderRoute.js");
 ///
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -14,7 +15,7 @@ app.use(cookieParser());
 //routes
 app.use("/api/v1", product);
 app.use("/api/v1/", user);
-
+app.use("/api/v1/", order);
 //middleware for error
 app.use(errorMiddleware);
 
