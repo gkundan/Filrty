@@ -8,10 +8,20 @@
     justify-content: center;
     color: #fff;
   }
-  
+  .text-animate{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .text-animate span{
+    color: #fff;
+    
+  }
   .banner > h1 {
-    margin: 5vmax;
+    margin: 1vmax;
     font: 600 2.5vmax "Roboto";
+    color: #ff008c;;
   }
   
   .banner > p {
