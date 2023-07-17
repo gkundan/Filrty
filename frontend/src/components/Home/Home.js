@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { FaMouse } from "react-icons/fa";
 import "./Home.css";
-import Product from "./Product.js";
+import Product from "./ProductCard.js";
 import MetaData from "../layouts/MetaData";
 import TextTransition, { presets } from "react-text-transition";
 import { getProduct } from "../../actions/productAction";
