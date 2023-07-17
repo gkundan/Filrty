@@ -1,0 +1,24 @@
+* body {
+  margin: 0 auto;
+  padding: 0;
+  font-size: 16px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: none;
+}
+.redColor {
+  color: red;
+}
+
+.greenColor {
+  color: green;
+}
