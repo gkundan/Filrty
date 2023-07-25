@@ -6,11 +6,14 @@ import Loader from "../layouts/Loader/Loader";
 import ProductCard from "../Home/ProductCard";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
+import Slider from "@mui/material/Slider";
+import Typography from "@mui/material/Typography";
 
 function Product() {
   const dispatch = useDispatch();
   const [currentPage, setcurrentPage] = useState(1);
   const { keyword } = useParams();
+  const [price, setprice] = useState([0, 130000]);
 
   const { loading, products, resultPerPage, productCount } = useSelector(
     (state) => state.products
@@ -19,10 +22,13 @@ function Product() {
   const setCurrentPageNo = (e) => {
     setcurrentPage(e);
   };
+  const priceHandler = (event, newPrice) => {
+    setprice(newPrice);
+  };
 
   useEffect(() => {
-    dispatch(getProduct(keyword, currentPage));
-  }, [dispatch, keyword, currentPage]);
+    dispatch(getProduct(keyword, currentPage, price));
+  }, [dispatch, keyword, currentPage, price]);
 
   return (
     <>
@@ -37,6 +43,19 @@ function Product() {
                 <ProductCard key={product._id} product={product} />
               ))}
           </div>
+
+          <div className="filterBox">
+            <Typography>Price</Typography>
+            <Slider
+              value={price}
+              onChange={priceHandler}
+              valueLabelDisplay="auto"
+              aria-labelledby="range-slider"
+              min={0}
+              max={130000}
+            />
+          </div>
+
           {resultPerPage < productCount && (
             <div className="paginationBox">
               <Pagination

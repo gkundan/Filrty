@@ -14,31 +14,52 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
   });
 });
 
-// Get all products
-exports.getAllProducts = catchAsyncError(async (req, res, next) => {
-  // for page 1 products
+// Get All Product
+exports.getAllProducts = async (req, res, next) => {
+  const { keyword, page, priceGte, priceLte } = req.query;
+
   const resultPerPage = 8;
+  const currentPage = parseInt(page) || 1;
 
-  // Count documents
-  const productCount = await Product.countDocuments();
+  const priceQuery = {};
+  if (priceGte) {
+    priceQuery.$gte = parseInt(priceGte);
+  }
+  if (priceLte) {
+    priceQuery.$lte = parseInt(priceLte);
+  }
 
-  const apiFeature = new ApiFeatures(Product.find(), req.query)
-    .search()
-    .filter()
-    .pagination(resultPerPage);
+  const query = {
+    $or: [
+      { name: { $regex: keyword, $options: "i" } },
+      { category: { $regex: keyword, $options: "i" } },
+    ],
+  };
 
-  // console.log("api query log", apiFeature.query); // Log the modified query
+  if (Object.keys(priceQuery).length !== 0) {
+    query.price = priceQuery;
+  }
 
-  const products = await apiFeature.query;
+  try {
+    const productCount = await Product.countDocuments(query);
+    const products = await Product.find(query)
+      .skip((currentPage - 1) * resultPerPage)
+      .limit(resultPerPage);
 
-  // console.log("products log", products); // Log the products array
-
-  res.status(200).json({
-    success: true,
-    products,
-    productCount,
-  });
-});
+    res.status(200).json({
+      success: true,
+      products,
+      productCount,
+      resultPerPage,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error retrieving products",
+      error: error.message,
+    });
+  }
+};
 
 // Get product detail
 exports.getProductDetail = catchAsyncError(async (req, res) => {

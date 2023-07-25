@@ -9,14 +9,18 @@ import {
   CLEAR_ERROR,
 } from "../constants/productConstants";
 
+//get products
 export const getProduct =
-  (keyword = "", currentPage = 1) =>
+  (keyword = "", currentPage = 1, price = [0, 130000]) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_PRODUCT_REQUEST });
-      const link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}`;
-      const { data } = await axios.get(link);
 
+      // Update the query parameter names to match the backend
+      const link = `http://localhost:4000/api/v1/products?keyword=${keyword}&page=${currentPage}&priceGte=${price[0]}&priceLte=${price[1]}`;
+
+      const { data } = await axios.get(link);
+      console.log(data);
       dispatch({
         type: ALL_PRODUCT_SUCCESS,
         payload: data,

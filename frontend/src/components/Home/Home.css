@@ -1,5 +1,9 @@
 .banner {
-  background-image: linear-gradient(to right, #635dc0, #3027ae);
+  background-image: linear-gradient(to left, #100b49, #3027ae),
+    url("../images/MainBg.jpg");
+  background-size: cover; /* Adjusts the image size to cover the container */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  background-position: center; /* Centers the image horizontally and vertically */
   height: 100vmin;
   display: flex;
   flex-direction: column;
@@ -8,6 +12,7 @@
   justify-content: center;
   color: #fff;
 }
+
 .text-animate {
   display: flex;
   flex-direction: row;
