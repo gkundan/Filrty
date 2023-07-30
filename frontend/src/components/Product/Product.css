@@ -12,6 +12,7 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 5vmax;
+  min-height: 30vmax;
 }
 
 .paginationBox {
@@ -64,4 +65,38 @@
   position: absolute;
   top: 10vmax;
   left: 4vmax;
+}
+
+.categoryBox {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0%;
+}
+
+.category-li {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  transition: all 0.5s;
+}
+
+.category-li:hover {
+  background-color: #e0e0e0;
+}
+.filterBox > fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.329);
+}
+
+@media screen and (max-width: 600px) {
+  .filterBox {
+    width: 20vmax;
+    position: static;
+    margin: auto;
+    text-align: center;
+  }
+  .page-link {
+    font: 300 1.7vmax "Roboto";
+  }
 }

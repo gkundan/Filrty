@@ -7,6 +7,7 @@ import { getProductDetail } from "../../actions/productAction";
 import { useParams } from "react-router-dom";
 import ReviewCard from "./ReviewCard.js";
 import Loader from "../layouts/Loader/Loader";
+import MetaData from "../layouts/MetaData";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const ProductDetail = () => {
         <Loader />
       ) : (
         <>
+          <MetaData title={`${product.name} ...`} />
           <div className="ProductDetail">
             <div className="CarouselContainer">
               <Carousel animation="slide">

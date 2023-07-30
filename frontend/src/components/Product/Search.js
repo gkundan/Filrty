@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Search.css";
+import MetaData from "../layouts/MetaData";
 
 const Search = () => {
   const [keyword, setKeyword] = useState("");
@@ -14,14 +15,17 @@ const Search = () => {
   };
 
   return (
-    <form className="SearchBox" onSubmit={searchSubmitHandler}>
-      <input
-        type="text"
-        placeholder="Search a product ..."
-        onChange={(e) => setKeyword(e.target.value)}
-      />
-      <input type="submit" value="Search" />
-    </form>
+    <>
+      <MetaData title="Find Your Products --- Flirty" />
+      <form className="SearchBox" onSubmit={searchSubmitHandler}>
+        <input
+          type="text"
+          placeholder="Search a product ..."
+          onChange={(e) => setKeyword(e.target.value)}
+        />
+        <input type="submit" value="Search" />
+      </form>
+    </>
   );
 };
 

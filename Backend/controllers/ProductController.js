@@ -15,8 +15,9 @@ exports.createProduct = catchAsyncError(async (req, res, next) => {
 });
 
 // Get All Product
+// Get All Product
 exports.getAllProducts = async (req, res, next) => {
-  const { keyword, page, priceGte, priceLte } = req.query;
+  const { keyword, page, priceGte, priceLte, category, ratings } = req.query;
 
   const resultPerPage = 8;
   const currentPage = parseInt(page) || 1;
@@ -36,8 +37,19 @@ exports.getAllProducts = async (req, res, next) => {
     ],
   };
 
+  if (category && category !== "All") {
+    query.category = category;
+  }
+
   if (Object.keys(priceQuery).length !== 0) {
     query.price = priceQuery;
+  }
+
+  if (ratings) {
+    // Extract the ratings value from the object and convert it to a number
+    const minRating = parseFloat(ratings.gte);
+    // Use the $gte operator to filter products with ratings greater than or equal to minRating
+    query.ratings = { $gte: minRating };
   }
 
   try {
